@@ -68,8 +68,7 @@ public class WifiAdapter extends RecyclerView.Adapter<WifiAdapter.ViewHolder> {
 
         int level = mList.get(position).level;
         setLevel(level,desc,holder);
-
-        if (WifiUtils.getInstance().isConnected(mList.get(position).SSID)){
+         if (WifiUtils.getInstance().isConnected(mList.get(position).SSID)){
             desc = "已连接";
         }
         holder.mInfo.setText(desc);
