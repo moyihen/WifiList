@@ -3,18 +3,21 @@ package com.tangfeng.wifilist;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import com.suke.widget.SwitchButton;
 import com.tangfeng.wifilist.adapter.WifiAdapter;
 import com.tangfeng.wifilist.utils.WifiUtils;
 import com.tangfeng.wifilist.widget.CustomDialog;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,22 +67,28 @@ public class MainActivity extends AppCompatActivity implements WifiUtils.wifiLis
 
     }
 
+
+
     private void initData() {
         List<ScanResult> scanResult = mWifiUtils.getScanResult(mWifiManager);
-        Log.i(TAG, "initData: "+scanResult.toString());
+        //Log.i(TAG, "initData: "+scanResult.toString());
         mList.clear();
         for (ScanResult scan : scanResult) {
-            //Log.i(TAG, "onCreate:扫描到的网络 " + scan.toString());
+            Log.i(TAG, "onCreate:扫描到的网络 " + scan.toString());
             String ssid = scan.SSID;
             if (!ssid.equals(""))
                 mList.add(scan);
         }
         mWifiAdapter.notifyDataSetChanged();
+
     }
 
     private void initView() {
         mSw_bt = (SwitchButton) findViewById(R.id.sw_bt);
         mSw_bt.setOnCheckedChangeListener(this::swListener);
+        Button bt_ap = findViewById(R.id.bt_ap);
+        bt_ap.setOnClickListener(view -> startActivity(new Intent(this,AccessPoint.class)));
+        findViewById(R.id.bt_all).setOnClickListener(view -> startActivity(new Intent(this,SettingActivity.class)));
         RecyclerView recycle_view = findViewById(R.id.recycle_view);
         recycle_view.setLayoutManager(new LinearLayoutManager(this));
 
@@ -111,12 +120,7 @@ public class MainActivity extends AppCompatActivity implements WifiUtils.wifiLis
                // mCustomDialog.show();
             }
         });
-        findViewById(R.id.iv_test).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initData();
-            }
-        });
+
     }
 
     public String stringReplace(String str) {

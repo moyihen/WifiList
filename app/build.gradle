@@ -36,5 +36,5 @@ dependencies {
 
     compile 'com.android.support:recyclerview-v7:26.1.0'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
-
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 }

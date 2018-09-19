@@ -1,5 +1,6 @@
 package com.tangfeng.wifilist.utils;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -192,6 +193,17 @@ public class WifiUtils {
     public boolean Connect(String SSID,String Password,WifiType type){
         if (!wifiManager.isWifiEnabled())
             return false;
+        // 状态变成WIFI_STATE_ENABLED的时候才能执行下面的语句
+        while (wifiManager.getWifiState() == WifiManager.WIFI_STATE_ENABLING) {
+            try {
+                // 为了避免程序一直while循环，让它睡个100毫秒在检测……
+                Thread.currentThread();
+                Thread.sleep(100);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+        }
+
         if (SSID == null || Password == null || SSID.equals("")) {
             Log.e(this.getClass().getName(),
                     "addNetwork() ## nullpointer error!");
@@ -223,7 +235,7 @@ public class WifiUtils {
     /**
      * 忘记网络
      * @param networkId
-     * @return
+     * @return .
      */
     public boolean remove(int networkId){
         if (null == wifiManager){
@@ -270,7 +282,7 @@ public class WifiUtils {
 
     /**
      * 获取当前连接wifi的配置.
-     * @return
+     * @return .
      */
     public WifiInfo getConnectionInfo(){
         if (null == wifiManager) {
@@ -352,9 +364,9 @@ public class WifiUtils {
    }
 
 
-   public enum WifiType {
-       WIFI_CIPHER_NOPASS, WIFI_CIPHER_WEP, WIFI_CIPHER_WPA, WIFI_CIPHER_WPA2;
-   }
+       public enum WifiType {
+           WIFI_CIPHER_NOPASS, WIFI_CIPHER_WEP, WIFI_CIPHER_WPA, WIFI_CIPHER_WPA2;
+       }
     /*---------------------------------------WIFI状态监听-------------------------------------------------------*/
 
     class WifiBroadCastReceiver extends BroadcastReceiver {

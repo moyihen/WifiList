@@ -14,17 +14,29 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_height="wrap_content">
-        <ImageView
+        <TextView
             android:layout_width="wrap_content"
-            android:src="@mipmap/wifi"
-            android:id="@+id/iv_test"
+            android:text="WLAN"
             android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"/>
         <com.suke.widget.SwitchButton
             android:layout_width="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
             android:id="@+id/sw_bt"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:id="@+id/bt_ap"
+            android:text="access-point"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:text="其他"
+            android:id="@+id/bt_all"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 <TextView
